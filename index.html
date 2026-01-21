@@ -1,12 +1,32 @@
- <!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="sv">
 <head>
-<title>Page Title</title>
+    <meta charset="UTF-8">
+    <title>Min Portfolio</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f4f4; padding: 40px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-decoration: none; color: #333; transition: 0.2s; }
+        .card:hover { transform: translateY(-5px); }
+    </style>
 </head>
 <body>
+    <h1>Mina Projekt</h1>
+    <div id="project-grid" class="grid"></div>
 
-<h1>This is a Heading</h1>
-<p>This is a paragraph.</p>
-
+    <script>
+        fetch('projects.json')
+            .then(res => res.json())
+            .then(data => {
+                const grid = document.getElementById('project-grid');
+                data.forEach(p => {
+                    grid.innerHTML += `
+                        <a href="project-view.html?id=${p.id}" class="card">
+                            <h3>${p.title}</h3>
+                            <p>${p.description}</p>
+                        </a>`;
+                });
+            });
+    </script>
 </body>
-</html> 
+</html>

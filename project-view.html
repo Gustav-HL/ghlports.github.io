@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <title>Projektvisning</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: auto; padding: 40px; }
+        img { max-width: 100%; border-radius: 8px; margin-top: 20px; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #666; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← Tillbaka</a>
+    <div id="content">Laddar innehåll...</div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+
+        fetch(`content/${id}/info.json`)
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('content').innerHTML = `
+                    <h1>${data.projectName}</h1>
+                    <p>${data.fullText}</p>
+                    <img src="content/${id}/${data.mainImage}">
+                `;
+            })
+            .catch(() => {
+                document.getElementById('content').innerText = "Kunde inte hitta projektet.";
+            });
+    </script>
+</body>
+</html>
